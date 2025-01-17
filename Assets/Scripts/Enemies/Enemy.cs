@@ -1,29 +1,25 @@
 using System.Collections;
 using UnityEngine;
 
-public class Enemy : PoolableObject, IDangerable
+public class Enemy : PoolableObject, IInteractable ,IDangerable
 {
     [SerializeField] private Mover _mover;
     [SerializeField] private Transform _gunPoint;
-    [SerializeField] private float _cooldown;
+    [SerializeField] private Recharger _recharger;
 
-    private ObjectPool<Bullet> _bulletPool;
     private Shooter _shooter;
     private Coroutine _shotCoroutine;
 
-
-    private void Awake()
-    {
-        Init();
-    }
-
-    private void Start()
+    private void OnEnable()
     {
         _shotCoroutine = StartCoroutine(Shot());
     }
 
     private void OnDisable()
     {
+        if (_shotCoroutine == null)
+            return;
+
         StopCoroutine(_shotCoroutine);
     }
 
@@ -32,25 +28,27 @@ public class Enemy : PoolableObject, IDangerable
         _mover.Move();
     }
 
-    public void SetBulletPool(ObjectPool<Bullet> bulletPool)
+    public void CreateShooter(ObjectPool<Bullet> bulletPool)
     {
-        _bulletPool = bulletPool;
-    }
-
-    private void Init()
-    {
-        _shooter = new Shooter(_bulletPool, _gunPoint);
+        Debug.Log("Сделали Шутер");
+        _shooter = new Shooter(bulletPool, _gunPoint, _recharger);
     }
 
     private IEnumerator Shot()
     {
-        var wait = new WaitForSeconds(_cooldown);
+        Debug.Log("Запустили корутину выстрелов врага");
+        var wait = new WaitForSeconds(_recharger.Cooldown);
 
         while (enabled)
         {
-            yield return wait;
+            if (_recharger.IsRecharge)
+            {
+                _shooter.Shot();
+            }
 
-            _shooter.Shot();
+            yield return wait;
         }
+
+        yield break;
     }
 }

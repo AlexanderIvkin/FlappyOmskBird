@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ObjectRemover<T> : MonoBehaviour where T: PoolableObject
+public class PoolableObjectRemover<T> : MonoBehaviour where T: PoolableObject
 {
     [SerializeField] private ObjectPool<T> _pool;
 

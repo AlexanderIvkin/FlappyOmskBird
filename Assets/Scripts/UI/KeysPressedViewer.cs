@@ -20,12 +20,12 @@ public class KeysPressedViewer : MonoBehaviour
 
     private void OnEnable()
     {
-        _inputReader.MoveKeyPressed += ChangeKeyColor;
+        _inputReader.FlyKeyPressed += ChangeKeyColor;
     }
 
     private void OnDisable()
     {
-        _inputReader.MoveKeyPressed -= ChangeKeyColor;
+        _inputReader.FlyKeyPressed -= ChangeKeyColor;
         
     }
 

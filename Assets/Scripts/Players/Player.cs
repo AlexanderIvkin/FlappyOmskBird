@@ -8,24 +8,50 @@ public class Player : MonoBehaviour
     [SerializeField] private PlayerRotator _rotator;
     [SerializeField] private ScoreCounter _scoreCounter;
     [SerializeField] private CollisionDetector _collisionDetector;
+    [SerializeField] private CollisionHandler _collisionHandler;
+    [SerializeField] private Transform _gunPoint;
+    [SerializeField] private ObjectPool<Bullet> _bulletPool;
+    [SerializeField] private Recharger _recharger;
 
-    public event Action GameOver; 
+    private Vector2 _startPosition;
+    private Shooter _shooter;
+
+    public event Action GameOvered;
+
+    private void Awake()
+    {
+        _startPosition = transform.position;
+        _shooter = new Shooter(_bulletPool, _gunPoint, _recharger);
+    }
 
     private void OnEnable()
     {
-        _inputReader.MoveKeyPressed += MoveUp;
-        _collisionDetector.CollisionDetected += ProcessCollision;
+        _inputReader.FlyKeyPressed += MoveUp;
+        _inputReader.ShotKeyPressed += _shooter.Shot;
+        _collisionDetector.CollisionDetected += _collisionHandler.ProcessCollision;
+        _collisionHandler.DangerableTouched += GameOver;
+        _collisionHandler.BonusableTouched += _scoreCounter.Add;
     }
 
     private void OnDisable()
     {
-        _inputReader.MoveKeyPressed -= MoveUp;
-        _collisionDetector.CollisionDetected -= ProcessCollision;
+        _inputReader.FlyKeyPressed -= MoveUp;
+        _inputReader.ShotKeyPressed -= _shooter.Shot;
+        _collisionDetector.CollisionDetected -= _collisionHandler.ProcessCollision;
+        _collisionHandler.DangerableTouched -= GameOver;
+        _collisionHandler.BonusableTouched -= _scoreCounter.Add;
     }
 
     private void Update()
     {
-        MoveDown();
+        RotateDown();
+    }
+
+    public void Reset()
+    {
+        _scoreCounter.Reset();
+        transform.position = _startPosition;
+        _mover.VelocityReset();
     }
 
     private void MoveUp()
@@ -34,23 +60,13 @@ public class Player : MonoBehaviour
         _rotator.RotateUp();
     }
 
-    private void MoveDown()
+    private void RotateDown()
     {
         _rotator.RotateDown();
     }
 
-    private void ProcessCollision(IInteractable interactable)
+    private void GameOver()
     {
-        if (interactable is IDangerable)
-        {
-            GameOver?.Invoke();
-        }
-
-        if (interactable is IBonusable)
-        {
-            IBonusable usefull = interactable as IBonusable;
-
-            _scoreCounter.Add(usefull.GetBonusValue());
-        }
+        GameOvered?.Invoke();
     }
 }

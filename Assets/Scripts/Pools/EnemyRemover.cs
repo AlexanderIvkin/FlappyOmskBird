@@ -1,4 +1,4 @@
-﻿public class EnemyRemover : ObjectRemover<Enemy>
+﻿public class EnemyRemover : PoolableObjectRemover<Enemy>
 {
 
 }

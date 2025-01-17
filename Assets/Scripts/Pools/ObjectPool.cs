@@ -8,8 +8,6 @@ public class ObjectPool<T> : MonoBehaviour  where T: PoolableObject
 
     private Queue<T> _pool;
 
-    public IEnumerable<T> PooledObjects => _pool;
-
     private void Awake()
     {
         _pool = new Queue<T>();
@@ -26,7 +24,6 @@ public class ObjectPool<T> : MonoBehaviour  where T: PoolableObject
         {
             T createdObject = Instantiate(_prefab);
             createdObject.transform.parent = _parent;
-
             return createdObject;
         }
 

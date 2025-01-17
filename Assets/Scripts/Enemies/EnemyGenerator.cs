@@ -41,6 +41,6 @@ public class EnemyGenerator : MonoBehaviour
 
         enemy.transform.position = spawnPoint;
         enemy.transform.right = transform.right;
-        enemy.SetBulletPool(_bulletPool);
+        enemy.CreateShooter(_bulletPool);
     }
 }

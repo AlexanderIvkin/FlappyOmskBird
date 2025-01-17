@@ -11,4 +11,9 @@ public class ScoreCounter : MonoBehaviour
 
         Value += value;
     }
+
+    public void Reset()
+    {
+        Value = 0;
+    }
 }

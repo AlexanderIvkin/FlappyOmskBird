@@ -3,10 +3,11 @@ using UnityEngine;
 
 public abstract class PoolableObject: MonoBehaviour
 {
-    public event Action Disabled;
+    public event Action<PoolableObject> Disabled;
 
-    protected void Disable()
+    public void Disable()
     {
-        Disabled?.Invoke();
+        gameObject.SetActive(false);
+        Disabled?.Invoke(this);
     }
 }

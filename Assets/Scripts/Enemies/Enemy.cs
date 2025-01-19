@@ -6,13 +6,13 @@ public class Enemy : PoolableObject, IInteractable ,IDangerable
     [SerializeField] private Mover _mover;
     [SerializeField] private Transform _gunPoint;
     [SerializeField] private Recharger _recharger;
-
-    private Shooter _shooter;
+    
+    private EnemyBulletSpawner _bulletSpawner;
     private Coroutine _shotCoroutine;
 
-    private void OnEnable()
+    public void SetBulletSpawner(EnemyBulletSpawner bulletSpawner)
     {
-        _shotCoroutine = StartCoroutine(Shot());
+        _bulletSpawner = bulletSpawner;
     }
 
     private void OnDisable()
@@ -28,27 +28,29 @@ public class Enemy : PoolableObject, IInteractable ,IDangerable
         _mover.Move();
     }
 
-    public void CreateShooter(ObjectPool<Bullet> bulletPool)
+    public void BehaviourExecute()
     {
-        Debug.Log("Сделали Шутер");
-        _shooter = new Shooter(bulletPool, _gunPoint, _recharger);
+        if (_shotCoroutine != null)
+            return;
+
+        _shotCoroutine = StartCoroutine(Shot());
     }
 
     private IEnumerator Shot()
     {
-        Debug.Log("Запустили корутину выстрелов врага");
         var wait = new WaitForSeconds(_recharger.Cooldown);
 
         while (enabled)
         {
+            yield return wait;
+
             if (_recharger.IsRecharge)
             {
-                _shooter.Shot();
+                _bulletSpawner.Spawn(_gunPoint.position);
+                _recharger.Recharge();
             }
-
-            yield return wait;
         }
 
-        yield break;
+        _shotCoroutine = null;
     }
 }

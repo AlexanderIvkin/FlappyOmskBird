@@ -12,22 +12,21 @@ public class Player : MonoBehaviour
     [SerializeField] private Transform _gunPoint;
     [SerializeField] private ObjectPool<Bullet> _bulletPool;
     [SerializeField] private Recharger _recharger;
+    [SerializeField] private PlayerBulletSpawner _playerBulletSpawner;
 
     private Vector2 _startPosition;
-    private Shooter _shooter;
 
     public event Action GameOvered;
 
     private void Awake()
     {
         _startPosition = transform.position;
-        _shooter = new Shooter(_bulletPool, _gunPoint, _recharger);
     }
 
     private void OnEnable()
     {
         _inputReader.FlyKeyPressed += MoveUp;
-        _inputReader.ShotKeyPressed += _shooter.Shot;
+        _inputReader.ShotKeyPressed += Shot;
         _collisionDetector.CollisionDetected += _collisionHandler.ProcessCollision;
         _collisionHandler.DangerableTouched += GameOver;
         _collisionHandler.BonusableTouched += _scoreCounter.Add;
@@ -36,7 +35,7 @@ public class Player : MonoBehaviour
     private void OnDisable()
     {
         _inputReader.FlyKeyPressed -= MoveUp;
-        _inputReader.ShotKeyPressed -= _shooter.Shot;
+        _inputReader.ShotKeyPressed -= Shot;
         _collisionDetector.CollisionDetected -= _collisionHandler.ProcessCollision;
         _collisionHandler.DangerableTouched -= GameOver;
         _collisionHandler.BonusableTouched -= _scoreCounter.Add;
@@ -47,11 +46,11 @@ public class Player : MonoBehaviour
         RotateDown();
     }
 
-    public void Reset()
+    public void Restart()
     {
         _scoreCounter.Reset();
         transform.position = _startPosition;
-        _mover.VelocityReset();
+        _mover.VelocityRestart();
     }
 
     private void MoveUp()
@@ -63,6 +62,11 @@ public class Player : MonoBehaviour
     private void RotateDown()
     {
         _rotator.RotateDown();
+    }
+
+    private void Shot()
+    {
+        _playerBulletSpawner.Spawn(_gunPoint.position);
     }
 
     private void GameOver()

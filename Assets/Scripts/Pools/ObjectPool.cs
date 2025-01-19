@@ -3,40 +3,46 @@ using UnityEngine;
 
 public class ObjectPool<T> : MonoBehaviour  where T: PoolableObject
 {
-    private Transform _parent;
     [SerializeField] private T _prefab;
 
     private Queue<T> _pool;
+    private List<T> _allObjects;
 
     private void Awake()
     {
         _pool = new Queue<T>();
     }
 
-    public void SetParentObject( Transform parent)
+    public T Get(Vector3 positon)
     {
-        _parent = parent;
-    }
+        T newPoolableObject;
 
-    public T GetObject()
-    {
-        if (_pool.Count == 0)
+        if (_pool.Count > 0)
         {
-            T createdObject = Instantiate(_prefab);
-            createdObject.transform.parent = _parent;
-            return createdObject;
+            newPoolableObject = _pool.Dequeue();
+        }
+        else
+        {
+            newPoolableObject = CreateObject(_prefab);
         }
 
-        return _pool.Dequeue();
+        newPoolableObject.transform.position = positon;
+        //newPoolableObject.gameObject.SetActive(true);
+
+        return newPoolableObject;
     }
 
-    public void PutObject(T enemy)
+    private T CreateObject(T prefab)
     {
-        _pool.Enqueue(enemy);
-        enemy.gameObject.SetActive(false);
+        return Instantiate(prefab);
     }
 
-    public void Reset()
+    public void Release(T poolableObject)
+    {
+        _pool.Enqueue(poolableObject);
+    }
+
+    public void Restart()
     {
         _pool.Clear();
     }

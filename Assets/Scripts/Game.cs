@@ -10,6 +10,8 @@ public class Game : MonoBehaviour
     [SerializeField] private EndGameScreen _endGameScreen;
     [SerializeField] private Canvas _inGameCanvas;
     [SerializeField] private Ground _ground;
+    [SerializeField] private EnemySpawner _enemySpawner;
+    [SerializeField] private EnemyBulletSpawner _enemyBulletSpawner;
 
     private void OnEnable()
     {
@@ -40,8 +42,8 @@ public class Game : MonoBehaviour
     private void StartGame()
     {
         Time.timeScale = 1;
-        _player.Reset();
-        _ground.Reset();
+        _player.Restart();
+        _ground.Restart();
         _inGameCanvas.gameObject.SetActive(true);
     }
 

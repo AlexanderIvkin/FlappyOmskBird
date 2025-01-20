@@ -105,7 +105,6 @@ MonoBehaviour:
   _mover: {fileID: 2223027482774822725}
   _gunPoint: {fileID: 6438763595967788225}
   _recharger: {fileID: 797232350060943727}
-  _bulletSpawner: {fileID: 0}
 --- !u!114 &797232350060943727
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,7 +185,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 128

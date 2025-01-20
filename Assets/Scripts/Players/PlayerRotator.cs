@@ -22,6 +22,6 @@ public class PlayerRotator : MonoBehaviour
 
     public void RotateDown()
     {
-        transform.rotation = Quaternion.Lerp(transform.rotation, _minRotation, _rotationSpeed);
+        transform.rotation = Quaternion.Lerp(transform.rotation, _minRotation, _rotationSpeed * Time.deltaTime);
     }
 }

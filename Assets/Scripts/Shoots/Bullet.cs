@@ -4,7 +4,7 @@ public class Bullet : PoolableObject, IInteractable, IDangerable
 {
     [SerializeField] protected Mover _mover;
 
-    protected void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         Debug.Log("Коллизия происходит");
 
@@ -17,7 +17,7 @@ public class Bullet : PoolableObject, IInteractable, IDangerable
         Disable();
     }
 
-    protected void Update()
+    private void Update()
     {
         _mover.Move();
     }

@@ -4,7 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(Player))]
 public class CollisionDetector : MonoBehaviour
 {
-    public event Action<IInteractable> CollisionDetected;
+    public event Action<IInteractable> TriggerEntered;
 
     private void OnValidate()
     {
@@ -15,7 +15,7 @@ public class CollisionDetector : MonoBehaviour
     {
         if(collision.TryGetComponent(out IInteractable interactable))
         {
-            CollisionDetected?.Invoke(interactable);
+            TriggerEntered?.Invoke(interactable);
         }
     }
 }

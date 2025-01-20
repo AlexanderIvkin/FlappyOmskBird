@@ -27,7 +27,7 @@ public class Player : MonoBehaviour
     {
         _inputReader.FlyKeyPressed += MoveUp;
         _inputReader.ShotKeyPressed += Shot;
-        _collisionDetector.CollisionDetected += _collisionHandler.ProcessCollision;
+        _collisionDetector.TriggerEntered += _collisionHandler.ProcessCollision;
         _collisionHandler.DangerableTouched += GameOver;
         _collisionHandler.BonusableTouched += _scoreCounter.Add;
     }
@@ -36,7 +36,7 @@ public class Player : MonoBehaviour
     {
         _inputReader.FlyKeyPressed -= MoveUp;
         _inputReader.ShotKeyPressed -= Shot;
-        _collisionDetector.CollisionDetected -= _collisionHandler.ProcessCollision;
+        _collisionDetector.TriggerEntered -= _collisionHandler.ProcessCollision;
         _collisionHandler.DangerableTouched -= GameOver;
         _collisionHandler.BonusableTouched -= _scoreCounter.Add;
     }
@@ -44,13 +44,6 @@ public class Player : MonoBehaviour
     private void Update()
     {
         RotateDown();
-    }
-
-    public void Restart()
-    {
-        _scoreCounter.Reset();
-        transform.position = _startPosition;
-        _mover.VelocityRestart();
     }
 
     private void MoveUp()
@@ -66,7 +59,11 @@ public class Player : MonoBehaviour
 
     private void Shot()
     {
-        _playerBulletSpawner.Spawn(_gunPoint.position);
+        if (_recharger.IsRecharge)
+        {
+            _recharger.Recharge();
+            _playerBulletSpawner.Spawn(_gunPoint.position);
+        }
     }
 
     private void GameOver()

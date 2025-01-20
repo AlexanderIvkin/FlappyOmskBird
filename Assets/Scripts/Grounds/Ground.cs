@@ -8,9 +8,4 @@ public class Ground : MonoBehaviour, IInteractable, IDangerable
     {
         _groundRotator.Rotate();
     }
-
-    public void Restart()
-    {
-        _groundRotator.Reset();
-    }
 }

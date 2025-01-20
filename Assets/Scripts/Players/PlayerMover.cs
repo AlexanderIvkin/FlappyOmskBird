@@ -10,9 +10,4 @@ public class PlayerMover : MonoBehaviour
     {
         _rigidbody2D.velocity = new Vector2(0, _upForce);
     }
-
-    public void VelocityRestart()
-    {
-        _rigidbody2D.velocity = Vector2.zero;
-    }
 }

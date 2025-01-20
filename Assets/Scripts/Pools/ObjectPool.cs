@@ -6,7 +6,6 @@ public class ObjectPool<T> : MonoBehaviour  where T: PoolableObject
     [SerializeField] private T _prefab;
 
     private Queue<T> _pool;
-    private List<T> _allObjects;
 
     private void Awake()
     {
@@ -27,7 +26,6 @@ public class ObjectPool<T> : MonoBehaviour  where T: PoolableObject
         }
 
         newPoolableObject.transform.position = positon;
-        //newPoolableObject.gameObject.SetActive(true);
 
         return newPoolableObject;
     }
@@ -40,10 +38,5 @@ public class ObjectPool<T> : MonoBehaviour  where T: PoolableObject
     public void Release(T poolableObject)
     {
         _pool.Enqueue(poolableObject);
-    }
-
-    public void Restart()
-    {
-        _pool.Clear();
     }
 }

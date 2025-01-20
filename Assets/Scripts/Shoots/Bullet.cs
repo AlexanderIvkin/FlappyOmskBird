@@ -6,11 +6,10 @@ public class Bullet : PoolableObject, IInteractable, IDangerable
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("Коллизия происходит");
+        Debug.Log($"{gameObject.name} столкнулся с {collision.gameObject.name}, хоть паскуда и не должен был");
 
         if (collision.gameObject.TryGetComponent(out PoolableObject poolableObject))
         {
-            Debug.Log("Это пуловый объект");
             poolableObject.Disable();
         }
 

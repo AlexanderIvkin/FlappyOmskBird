@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     [SerializeField] private ObjectPool<Bullet> _bulletPool;
     [SerializeField] private Recharger _recharger;
     [SerializeField] private PlayerBulletSpawner _playerBulletSpawner;
+    [SerializeField] private UpLimiter _upLimiter;
 
     public event Action GameOvered;
 
@@ -37,6 +38,7 @@ public class Player : MonoBehaviour
     private void Update()
     {
         RotateDown();
+        _upLimiter.LimitY();
     }
 
     private void MoveUp()

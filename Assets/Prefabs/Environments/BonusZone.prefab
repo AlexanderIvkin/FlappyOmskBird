@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 9203881837315745754}
   - component: {fileID: 5470983321037031179}
   - component: {fileID: 2837993310096151008}
+  - component: {fileID: -5706645265765998622}
   m_Layer: 0
   m_Name: BonusZone
   m_TagString: Untagged
@@ -4866,3 +4867,16 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &-5706645265765998622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1379475298303996049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1904ec79f5426a47b8a6d0d844d186e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _bonusValue: 15

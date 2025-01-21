@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemySpawner : Spawner<Enemy>
@@ -19,9 +18,9 @@ public class EnemySpawner : Spawner<Enemy>
         _generateEnemyCoroutine = StartCoroutine(GenereateEnemy());
     }
 
-    protected override void Init(Enemy gettedObject)
+    protected override void InitRotation(Enemy gettedObject)
     {
-        base.Init(gettedObject);
+        base.InitRotation(gettedObject);
 
         gettedObject.SetBulletSpawner(_bulletSpawner);
         gettedObject.BehaviourExecute();

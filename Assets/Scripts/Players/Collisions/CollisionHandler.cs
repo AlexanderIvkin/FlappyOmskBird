@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class CollisionHandler : MonoBehaviour
 {
-    public event Action<int> BonusableTouched;
+    public event Action<int> ScoreableTouched;
     public event Action DangerableTouched;
 
     public void ProcessCollision(IInteractable interactable)
@@ -13,11 +13,11 @@ public class CollisionHandler : MonoBehaviour
             DangerableTouched?.Invoke();
         }
 
-        if (interactable is IBonusable)
+        if (interactable is IScoreable)
         {
-            IBonusable usefull = interactable as IBonusable;
+            IScoreable usefull = interactable as IScoreable;
 
-            BonusableTouched?.Invoke(usefull.GetBonusValue());
+            ScoreableTouched?.Invoke(usefull.GetBonusValue());
         }
     }
 }

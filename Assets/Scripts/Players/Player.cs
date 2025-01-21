@@ -4,7 +4,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField] private InputReader _inputReader;
-    [SerializeField] private PlayerMover _mover;
+    [SerializeField] private PlayerFlyer _mover;
     [SerializeField] private PlayerRotator _rotator;
     [SerializeField] private ScoreCounter _scoreCounter;
     [SerializeField] private CollisionDetector _collisionDetector;
@@ -14,14 +14,7 @@ public class Player : MonoBehaviour
     [SerializeField] private Recharger _recharger;
     [SerializeField] private PlayerBulletSpawner _playerBulletSpawner;
 
-    private Vector2 _startPosition;
-
     public event Action GameOvered;
-
-    private void Awake()
-    {
-        _startPosition = transform.position;
-    }
 
     private void OnEnable()
     {
@@ -29,7 +22,7 @@ public class Player : MonoBehaviour
         _inputReader.ShotKeyPressed += Shot;
         _collisionDetector.TriggerEntered += _collisionHandler.ProcessCollision;
         _collisionHandler.DangerableTouched += GameOver;
-        _collisionHandler.BonusableTouched += _scoreCounter.Add;
+        _collisionHandler.ScoreableTouched += _scoreCounter.Add;
     }
 
     private void OnDisable()
@@ -38,7 +31,7 @@ public class Player : MonoBehaviour
         _inputReader.ShotKeyPressed -= Shot;
         _collisionDetector.TriggerEntered -= _collisionHandler.ProcessCollision;
         _collisionHandler.DangerableTouched -= GameOver;
-        _collisionHandler.BonusableTouched -= _scoreCounter.Add;
+        _collisionHandler.ScoreableTouched -= _scoreCounter.Add;
     }
 
     private void Update()
@@ -48,7 +41,7 @@ public class Player : MonoBehaviour
 
     private void MoveUp()
     {
-        _mover.Move();
+        _mover.Fly();
         _rotator.RotateUp();
     }
 

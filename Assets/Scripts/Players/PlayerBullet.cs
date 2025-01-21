@@ -1,4 +1,1 @@
-public class PlayerBullet : Bullet
-{
-    
-}
+public class PlayerBullet : Bullet { }

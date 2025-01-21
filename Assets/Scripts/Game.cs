@@ -22,7 +22,7 @@ public class Game : MonoBehaviour
     private void OnRestartButtonClick()
     {
         Time.timeScale = 1;
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     private void OnGameOver()

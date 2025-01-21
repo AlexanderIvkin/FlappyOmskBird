@@ -6,15 +6,15 @@ public class Spawner<T> : MonoBehaviour where T: PoolableObject
     [SerializeField] protected ObjectPool<T> ObjectPool;
 
 
-    protected virtual void Init(T gettedObject)
+    protected virtual void InitRotation(T gettedObject)
     {
-        gettedObject.transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
+        gettedObject.transform.right = transform.right;
     }
 
     public void Spawn(Vector3 position)
     {
         T gettedObject = ObjectPool.Get(position);
-        Init(gettedObject);
+        InitRotation(gettedObject);
         gettedObject.Disabled += OnObjectDisable;
         gettedObject.gameObject.SetActive(true);
     }

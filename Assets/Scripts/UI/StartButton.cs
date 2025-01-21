@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -9,6 +8,7 @@ public class StartButton : MonoBehaviour
     [SerializeField] private Button _button;
     [SerializeField] private Image _curtain;
     [SerializeField] private float _delay;
+    [SerializeField] private int _firstLevelSceneNumber;
 
     private void OnEnable()
     {
@@ -41,6 +41,6 @@ public class StartButton : MonoBehaviour
             yield return null;
         }
 
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(_firstLevelSceneNumber);
     }
 }

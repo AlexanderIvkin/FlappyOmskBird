@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class BonusZone : IBonusable
+public class ScoreZone : MonoBehaviour ,IScoreable
 {
     [SerializeField] private int _bonusValue;
 
